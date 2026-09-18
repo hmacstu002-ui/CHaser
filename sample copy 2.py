@@ -1,7 +1,12 @@
 from client.ChaserClient import ChaserClient
 
 direction = "right"
- ｃｖｓｄｗｘ
+
+def 次の方向(direction):
+    order = ["right","up","left","down"]
+    i = order. index(direction)
+    return order[(i + 1) % len (order)]
+
 def main():
     client = ChaserClient("192.168.xx.x", 2009, "test")
     client.connect()
@@ -13,25 +18,24 @@ def main():
         if control_code == '0':
             break
 
-        break
-    # 今の方向をsearchする
-    client.get_ready()
-    if direction == "right":
-        control_code, map_info = client.search_right()
-    elif direction == "up":
-        control_code, map_info = client.search_up()
-    # left, down も同様に用意する
-    client.turn_end()
-
-    if 進める(map_info):
+        #今の方向を search する
         client.get_ready()
         if direction == "right":
-            client.walk_right()
+            control_code, map_info = client.search_right()
         elif direction == "up":
-            client.walk_up()
+            control_code, map_info = client.search_up()
+        # left, down も同様にする
         client.turn_end()
-    else:
-        direction = 次の方向(direction) # 右回りに切り替える
+
+        if 進める(map_info):
+            client.get_ready()
+            if direction == "right":
+                client.walk_right()
+            elif direction == "up":
+                client.walk_up()
+            client.turn_end()
+        else:
+            direction = 次の方向(direction)     # 右回りに切り替える
     client.close()
 
 
