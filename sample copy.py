@@ -11,9 +11,15 @@ def main():
         # 制御コードが'0'の場合ループを抜ける
         if control_code == '0':
             break
-
         
-         
+        client.get_ready()
+        client.search_left()
+        client.turn_end()
+
+        clientclient.get_ready()
+        client.search_left()
+        client.turn_end()
+
     client.close()
 
 
